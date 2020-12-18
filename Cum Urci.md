@@ -40,6 +40,9 @@ Mai multe detalii: [Aici](https://docs.github.com/en/free-pro-team@latest/github
 
 ### Ce avem de facut:
  > Sebi:Sebi's-branch
+ 
  > Madalin:Madalin's-branch
+ 
  > Munte:Madalin's-branch
+ 
  > Daniel:Daniel's-branch

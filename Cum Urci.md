@@ -4,7 +4,7 @@
 ```sh
 $ git checkout -b branch_name
 ```
-Change to your branch
+Change to your branch(vezi numele mai jos)
 
 ```sh
 $ git add .
@@ -37,3 +37,9 @@ Used to fetch and download content from a remote repository and immediately upda
 
 
 Mai multe detalii: [Aici](https://docs.github.com/en/free-pro-team@latest/github/managing-files-in-a-repository/adding-a-file-to-a-repository-using-the-command-line) 
+
+### Ce avem de facut:
+ > Sebi:Sebi's-branch
+ > Madalin:Madalin's-branch
+ > Munte:Madalin's-branch
+ > Daniel:Daniel's-branch

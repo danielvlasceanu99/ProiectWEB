@@ -39,10 +39,10 @@ Used to fetch and download content from a remote repository and immediately upda
 Mai multe detalii: [Aici](https://docs.github.com/en/free-pro-team@latest/github/managing-files-in-a-repository/adding-a-file-to-a-repository-using-the-command-line) 
 
 ### Nume branchs
- > Sebi:Sebi's-branch
+ > Sebi: Sebi's-branch
  
- > Madalin:Madalin's-branch
+ > Madalin: Madalin's-branch
  
- > Munte:Madalin's-branch
+ > Munte: Munte's-branch
  
- > Daniel:Daniel's-branch
+ > Daniel: Daniel's-branch

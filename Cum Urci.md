@@ -1,4 +1,4 @@
-# Android-Project Modificari
+# Proiect WEB
 
 ### Cum sa incarci ce ai lucrat pe git:
 ```sh

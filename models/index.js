@@ -21,7 +21,20 @@ Notes.hasMany(Files, {
     onDelete:"Cascade"
 });
 Files.belongsTo(Users, {
-    foreignKey: "note_id"
+    foreignKey: "noteId"
+})
+
+Users.hasMany(Shares, {
+    onDelete:"Cascade"
+})
+Notes.hasMany(Shares, {
+    onDelete:"Cascade"
+})
+Shares.belongsTo(Notes, {
+    foreignKey: "noteId"
+})
+Shares.belongsTo(Users, {
+    foreignKey: "userId"
 })
 
 module.exports = {

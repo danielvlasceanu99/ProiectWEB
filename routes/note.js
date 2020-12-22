@@ -11,7 +11,7 @@ router.get('/:user_id/notes', async(req, res)=>{
         if(user){
             res.status(200).send(user.notes)
         } else {
-            res.status(400).send({message:'User not found'})
+            res.status(404).send({message:'User not found'})
         }
     }
     catch {

@@ -38,6 +38,7 @@ Used to fetch and download content from a remote repository and immediately upda
 
 Mai multe detalii: [Aici](https://docs.github.com/en/free-pro-team@latest/github/managing-files-in-a-repository/adding-a-file-to-a-repository-using-the-command-line) 
 
+<<<<<<< HEAD
 ### Nume branchs
  > Sebi: Sebi's-branch
  
@@ -46,3 +47,13 @@ Mai multe detalii: [Aici](https://docs.github.com/en/free-pro-team@latest/github
  > Munte: Munte's-branch
  
  > Daniel: Daniel's-branch
+=======
+### Ce avem de facut:
+ > Sebi:Sebi's-branch
+
+ > Madalin:Madalin's-branch
+
+ > Munte:Madalin's-branch
+ 
+ > Daniel:Daniel's-branch
+>>>>>>> 3d592c50be99e571524d62dc5edc013b8e966077

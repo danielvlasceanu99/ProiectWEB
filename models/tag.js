@@ -1,10 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    "user",
+    "tag",
     {
       name: DataTypes.STRING,
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
     },
     {
       underscored: true,

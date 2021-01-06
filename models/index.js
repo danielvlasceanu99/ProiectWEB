@@ -1,46 +1,56 @@
-const Sequelize = require('sequelize')
-const db = require('../config/database')
-const UsersModel = require('./user')
-const NotesModel = require('./note')
-const FilesModel = require('./file')
-const SharesModel = require('./share')
+const Sequelize = require("sequelize");
+const db = require("../config/database");
+
+const UsersModel = require("./user");
+const NotesModel = require("./note");
+const FilesModel = require("./file");
+const SharesModel = require("./share");
+const TagModel = require("./tag");
 
 const Users = UsersModel(db, Sequelize);
 const Notes = NotesModel(db, Sequelize);
 const Files = FilesModel(db, Sequelize);
 const Shares = SharesModel(db, Sequelize);
+const Tags = TagModel(db, Sequelize);
+
+Notes.belongsToMany(Tags, {
+  through: "noteTag",
+});
+Tags.belongsToMany(Notes, {
+  through: "noteTag",
+});
 
 Users.hasMany(Notes, {
-    onDelete:"Cascade"
+  onDelete: "Cascade",
 });
 Notes.belongsTo(Users, {
-    foreignKey: "userId"
-})
+  foreignKey: "userId",
+});
 
 Notes.hasMany(Files, {
-    onDelete:"Cascade"
+  onDelete: "Cascade",
 });
 Files.belongsTo(Users, {
-    foreignKey: "noteId"
-})
+  foreignKey: "noteId",
+});
 
 Users.hasMany(Shares, {
-    onDelete:"Cascade"
-})
+  onDelete: "Cascade",
+});
 Notes.hasMany(Shares, {
-    onDelete:"Cascade"
-})
+  onDelete: "Cascade",
+});
 Shares.belongsTo(Notes, {
-    foreignKey: "noteId"
-})
+  foreignKey: "noteId",
+});
 Shares.belongsTo(Users, {
-    foreignKey: "userId"
-})
+  foreignKey: "userId",
+});
 
 module.exports = {
-    Users,
-    Notes,
-    Files,
-    Shares,
-    connection: db
-}
+  Users,
+  Notes,
+  Files,
+  Shares,
+  connection: db,
+};

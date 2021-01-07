@@ -23,7 +23,6 @@ function App() {
 
   return (
     <div className="App">
-     <h1>MUE</h1>
      <div>
        <UserRegister />
      </div>

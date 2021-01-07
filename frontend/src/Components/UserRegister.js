@@ -1,20 +1,46 @@
 import React, { Component, Fragment } from 'react'
 
 class UserRegister extends Component {
-
-    state = {
-        name: "", 
-        password: "", 
-        email: "", 
-        confirmPassword: "",
-        registered:false
-    }
-
+       
+            state = {
+                name: "", 
+                password: "", 
+                email: "", 
+                confirmPassword: "",
+                registered:false
+            }
+        
+            //luam referintele pentru inputuri pentru a le reseta valorile
+            inputNameRegister = React.createRef();
+            inputEmailRegister = React.createRef();
+            inputPasswordRegister = React.createRef();
+            inputConfirmPasswordRegister = React.createRef();
+        
+            inputEmailLogin= React.createRef();
+            inputPasswordLogin = React.createRef();
+      
+    
     changeForm = event => {
         event.preventDefault();
+        //daca intram pe login
         if(this.state.registered === false)
+        {
             this.setState({registered: true})
-        else this.setState({registered: false})
+            
+                 this.inputNameRegister.current.value = ""
+                this.inputConfirmPasswordRegister.current.value ="";
+                this.inputEmailRegister.current.value = "";
+                this.inputPasswordRegister.current.value ="";
+        }
+        else {
+            //daca intram pe register
+                this.setState({registered: false})
+           
+            this.inputEmailLogin.current.value = "";
+            this.inputPasswordLogin.current.value ="";
+            }
+
+        
     }
 
     handleNameChange = event => {
@@ -84,6 +110,7 @@ class UserRegister extends Component {
     }
 
     render() {
+
         return (
             <section className="login">
                 <div className="loginContainer">
@@ -91,11 +118,11 @@ class UserRegister extends Component {
                     <Fragment>
                         <label>
                             Email:
-                            <input type="text" name="email" onChange={this.handleEmailChange}></input>
+                            <input ref={this.inputEmailLogin} type="text"  name="emailLogin" onChange={this.handleEmailChange}></input>
                         </label>
                         <label>
                             Password:
-                            <input type="text" name="password" onChange={this.handlePasswordChange}></input>
+                            <input ref={this.inputPasswordLogin} type="text" name="passwordLogin" onChange={this.handlePasswordChange}></input>
                         </label>
                     <button  onClick={this.handleLogin}>Login</button>
                     </Fragment>
@@ -103,19 +130,19 @@ class UserRegister extends Component {
                     <Fragment>
                         <label>
                             Name:
-                            <input type="text" name="name" onChange={this.handleNameChange}></input>
+                            <input ref={this.inputNameRegister} type="text" name="nameRegister" onChange={this.handleNameChange}></input>
                         </label>
                         <label>
                             Email:
-                            <input type="text" name="email" onChange={this.handleEmailChange}></input>
+                            <input ref={this.inputEmailRegister} type="text" name="emailRegister" onChange={this.handleEmailChange}></input>
                         </label>
                         <label>
                             Password:
-                            <input type="text" name="password" onChange={this.handlePasswordChange}></input>
+                            <input ref={this.inputPasswordRegister} type="text" name="passwordRegister" onChange={this.handlePasswordChange}></input>
                         </label>
                         <label>
                             Confirm Password:
-                            <input type="text" name="confirmPassword" onChange={this.handleConfirmPasswordChange}></input>
+                            <input ref={this.inputConfirmPasswordRegister} type="text" name="confirmPasswordRegister" onChange={this.handleConfirmPasswordChange}></input>
                         </label>
                         <button  onClick={this.handleRegister}>Register</button>
                  </Fragment>}

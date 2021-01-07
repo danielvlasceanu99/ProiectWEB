@@ -4,9 +4,15 @@ const router = require("./routes");
 
 const passport = require("passport");
 const session = require("express-session");
+const cors = require("cors")
 
 const app = express();
 const port = 9999;
+
+app.use(cors({
+  origin: "http://localhost:3000",
+  credential: true
+}))
 
 require("./config/passport-config")(passport);
 app.use(
@@ -16,6 +22,13 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+
+app.use(function(req,res,next){
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+  next();
+})
 
 // Passport middleware
 app.use(passport.initialize());

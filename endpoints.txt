@@ -1,0 +1,27 @@
+/create-user - register, primeste name, email, password, confirmPassword
+
+/update-password/:id - schimbare parola(optional), primeste doar o parola noua(password)
+
+/:user_id/notes - preluare notite create de un utilizator, primeste in url id-ul utilizatorului, 
+	nimic din body
+
+/notes/:note_id - aduce o singura notita, primeste in url id-ul notitei
+
+/:user_id/create-note - creaza o notita pentru utilizatorul curent, primeste in body title,
+      subject, text si userId il primeste din url
+
+/:note_id/update-note - face update la title si text pe care le primeste din body, si id-ul notitei 
+	il primeste din url
+
+/delete-note/:note_id - sterge o notita al carei id il primeste in url
+
+/:note_id/files - aduce toate fisierele unei notite, al carei id il primeste in url
+
+/files/:file_id - preia un fisier, primeste id-ul in url
+
+/:note_id/create-file - creaza un fisier pentru o notita(ia id-ul notitei din url), primeste name, 
+	link(path), noteId il ia din url
+
+/delete-file/:file_id - sterge un fisier dupa id-ul fisierului pe care il primeste din url;
+
+/login - se ocupa de autentificare, primeste email, password

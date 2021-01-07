@@ -92,4 +92,8 @@ router.post("/login", async (req, res, next) => {
     failureFlash: false,
   })(req, res, next);
 });
+
+router.get("/user", async (req, res) => {
+  res.send(req.user);
+});
 module.exports = router;

@@ -91,7 +91,7 @@ router.post("/login", (req, res, next) => {
 				if (err) {
 					throw err;
 				}
-				res.json({ id: req.user.dataValues.id });
+				res.json({ id: req.user.dataValues.id }).send();
 				console.log(req.user);
 			});
 		}

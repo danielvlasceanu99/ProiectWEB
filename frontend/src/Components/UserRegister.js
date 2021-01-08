@@ -89,14 +89,15 @@ class UserRegister extends Component {
                 <div className="loginContainer">
                 {this.state.registered ? (
                     <Fragment>
-                        <label>
+                    
+                        {/* <label>
                             Email:
                             <input type="text" name="email" onChange={this.handleEmailChange}></input>
-                        </label>
+                        </label> 
                         <label>
                             Password:
                             <input type="text" name="password" onChange={this.handlePasswordChange}></input>
-                        </label>
+                        </label>*/}
                     <button  onClick={this.handleLogin}>Login</button>
                     </Fragment>
                 ):

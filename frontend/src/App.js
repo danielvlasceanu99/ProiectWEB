@@ -2,6 +2,7 @@ import './App.css';
 import React, {useState, useEffect} from 'react';
 import axios from 'axios'
 import UserRegister from "./Components/UserRegister"
+import FileUpload from "./Components/uploadFiles/FileUpload"
 
 function App() {
 
@@ -23,9 +24,13 @@ function App() {
 
   return (
     <div className="App">
-     <div>
-       <UserRegister />
-     </div>
+      <div className='container mt-4'>
+        <h4 className='display-4 text-center'> Test</h4>
+        <FileUpload />
+      </div>
+     {/* <div>
+       <UserRegister /> 
+     </div> */}
     </div>
   );
 }

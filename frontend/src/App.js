@@ -4,23 +4,22 @@ import axios from 'axios'
 import UserRegister from "./Components/UserRegister"
 import FileUpload from "./Components/uploadFiles/FileUpload"
 
+
 function App() {
+	// const [user, setUser] = useState('');
+	// const [email, setEmail] = useState('');
+	// const [password, setPassword] = useState('');
+	// const [emailError, setEmailError] = useState('');
+	// const [passwordError, setPassordError] = useState('');
+	// const [hasAccount, setHasAccount] = useState(false);
 
-    // const [user, setUser] = useState('');
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-    // const [emailError, setEmailError] = useState('');
-    // const [passwordError, setPassordError] = useState('');
-    // const [hasAccount, setHasAccount] = useState(false);
+	// const handleLogin =() =>{
+	//   axios.post("http://localhost:9999/login", {email: "", password: ""}).then();
+	// }
 
-
-    // const handleLogin =() =>{
-    //   axios.post("http://localhost:9999/login", {email: "", password: ""}).then();
-    // }
-
-    // const handleRegister = () =>{
-    //   axios.post("http://localhost:9999/create-user", {name: "", password: "", email: "", confirmPassword: ""}).then();
-    // }
+	// const handleRegister = () =>{
+	//   axios.post("http://localhost:9999/create-user", {name: "", password: "", email: "", confirmPassword: ""}).then();
+	// }
 
   return (
     <div className="App">
@@ -33,6 +32,7 @@ function App() {
      </div> */}
     </div>
   );
+
 }
 
 export default App;

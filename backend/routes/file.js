@@ -2,7 +2,9 @@ const express = require('express')
 const router = express.Router()
 const FileDB = require('../models').Files
 const NoteDB = require('../models').Notes
+const fileUpload=require('express-fileupload');
 
+router.use(fileUpload())
 router.get('/:note_id/files', async(req, res)=>{
     try{
         const note = await NoteDB.findByPk(req.params.note_id, {

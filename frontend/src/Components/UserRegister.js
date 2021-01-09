@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { Component, Fragment } from "react";
+import NoteStore from "./NoteStore";
 
 class UserRegister extends Component {
 	state = {
@@ -8,7 +9,7 @@ class UserRegister extends Component {
 		email: "",
 		confirmPassword: "",
 		registered: false,
-		loggedIn: false
+		loggedIn: null,
 	};
 
 	//luam referintele pentru inputuri pentru a le reseta valorile
@@ -88,21 +89,17 @@ class UserRegister extends Component {
 			email: this.state.email,
 		};
 
-		axios.post("http://localhost:9999/login", {password: this.state.password,
-		email: this.state.email}).then(response => {
-			this.setState({loggedIn : response.data })
-			this.setState({loggedIn: this.state.loggedIn["id"]})
-			console.log(this.state.loggedIn)
-		})
+		axios.post("http://localhost:9999/login", { password: this.state.password, email: this.state.email }).then((response) => {
+			this.setState({ loggedIn: response.data });
+			this.setState({ loggedIn: response.data["id"] });
+			console.log(this.state.loggedIn);
+		});
 	};
 
 	render() {
 		return (
 			<div>
-				{this.state.loggedIn? (
-					//<Componenta this.state.loggedIn/>
-					//iei datele in componenta ta cu this.props
-
+				{this.state.loggedIn ? ( //iei datele in componenta ta cu this.props //<Componenta this.state.loggedIn/>
 					// aici madaline -> componenta
 					// aici madaline -> componenta
 					// aici madaline -> componenta
@@ -117,61 +114,61 @@ class UserRegister extends Component {
 					// aici madaline -> componenta
 					// aici madaline -> componenta
 					// aici madaline -> componenta
-					null
-				):(
-				<section className='login'>
-					<div className='loginContainer'>
-						{this.state.registered ? (
-							<Fragment>
-								<label>
-									Email:
-									<input ref={this.inputEmailLogin} type='text' name='emailLogin' onChange={this.handleEmailChange}></input>
-								</label>
-								<label>
-									Password:
-									<input ref={this.inputPasswordLogin} type='text' name='passwordLogin' onChange={this.handlePasswordChange}></input>
-								</label>
-								<button onClick={this.handleLogin}>Login</button>
-							</Fragment>
-						) : (
-							<Fragment>
-								<label>
-									Name:
-									<input ref={this.inputNameRegister} type='text' name='nameRegister' onChange={this.handleNameChange}></input>
-								</label>
-								<label>
-									Email:
-									<input ref={this.inputEmailRegister} type='text' name='emailRegister' onChange={this.handleEmailChange}></input>
-								</label>
-								<label>
-									Password:
-									<input ref={this.inputPasswordRegister} type='text' name='passwordRegister' onChange={this.handlePasswordChange}></input>
-								</label>
-								<label>
-									Confirm Password:
-									<input
-										ref={this.inputConfirmPasswordRegister}
-										type='text'
-										name='confirmPasswordRegister'
-										onChange={this.handleConfirmPasswordChange}></input>
-								</label>
-								<button onClick={this.handleRegister}>Register</button>
-							</Fragment>
-						)}
-
-						<div className='btnContainer'>
+					<NoteStore />
+				) : (
+					<section className='login'>
+						<div className='loginContainer'>
 							{this.state.registered ? (
-								<p>
-									Don't have an account?<span onClick={this.changeForm}>Sign up</span>
-								</p>
+								<Fragment>
+									<label>
+										Email:
+										<input ref={this.inputEmailLogin} type='text' name='emailLogin' onChange={this.handleEmailChange}></input>
+									</label>
+									<label>
+										Password:
+										<input ref={this.inputPasswordLogin} type='text' name='passwordLogin' onChange={this.handlePasswordChange}></input>
+									</label>
+									<button onClick={this.handleLogin}>Login</button>
+								</Fragment>
 							) : (
-								<p>
-									Have an account?<span onClick={this.changeForm}>Sign in</span>
-								</p>
+								<Fragment>
+									<label>
+										Name:
+										<input ref={this.inputNameRegister} type='text' name='nameRegister' onChange={this.handleNameChange}></input>
+									</label>
+									<label>
+										Email:
+										<input ref={this.inputEmailRegister} type='text' name='emailRegister' onChange={this.handleEmailChange}></input>
+									</label>
+									<label>
+										Password:
+										<input ref={this.inputPasswordRegister} type='text' name='passwordRegister' onChange={this.handlePasswordChange}></input>
+									</label>
+									<label>
+										Confirm Password:
+										<input
+											ref={this.inputConfirmPasswordRegister}
+											type='text'
+											name='confirmPasswordRegister'
+											onChange={this.handleConfirmPasswordChange}></input>
+									</label>
+									<button onClick={this.handleRegister}>Register</button>
+								</Fragment>
 							)}
+
+							<div className='btnContainer'>
+								{this.state.registered ? (
+									<p>
+										Don't have an account?<span onClick={this.changeForm}>Sign up</span>
+									</p>
+								) : (
+									<p>
+										Have an account?<span onClick={this.changeForm}>Sign in</span>
+									</p>
+								)}
+							</div>
 						</div>
-					</div>
-				</section>
+					</section>
 				)}
 			</div>
 		);

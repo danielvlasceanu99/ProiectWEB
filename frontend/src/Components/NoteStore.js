@@ -8,9 +8,9 @@ class NoteStore{
         this.emitter = new EventEmitter()
     }
 
-    async getAll(){
+    async getAll(id){
         try{
-            const response = await fetch(`${SERVER}/1/notes`)
+            const response = await fetch(`${SERVER}/${id}/notes`)
             const data = await response.json()
             this.data = data
             this.emitter.emit('GET_PLANES_SUCCESS')
@@ -21,25 +21,25 @@ class NoteStore{
         }
     }
 
-    async addOne(note){
+    async addOne(note,id){
         try{
-            await fetch(`${SERVER}/1/create-note`,{
+            await fetch(`${SERVER}/${id}/create-note`,{
                 method: 'post',
                 headers:{
                     'Content-Type': 'application/json'
                 },
                 body:JSON.stringify(note)
             })
-            this.getAll()
+            this.getAll(id)
         }catch(err){
             console.warn(err)
             this.emitter.emit('ADD_PLANES_ERROR')
         }
     }
 
-    async getOne(){
+    async getOne(id){
         try{
-            const response = await fetch(`${SERVER}/notes/1`)
+            const response = await fetch(`${SERVER}/notes/${id}`)
             const data = await response.json()
             this.data = data
             this.emitter.emit('GET_NOTE_SUCCESS')

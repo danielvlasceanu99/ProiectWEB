@@ -34,19 +34,15 @@ class NoteAddForm extends React.Component {
           <input type='text' name='title' id='title' value={this.state.title} onChange={this.handleChange} />
         </div>
         <div>
-          <label htmlFor='subject'>subject</label>
+          <label htmlFor='subject'>Subject</label>
           <input type='subject' name='subject' id='subject' value={this.state.subject} onChange={this.handleChange} />
         </div>
         <div>
-          <label htmlFor='text'>text</label>
+          <label htmlFor='text'>Text</label>
           <input type='text' name='text' id='text' value={this.state.text} onChange={this.handleChange} />
         </div>
         <div>
-          <label htmlFor='userId'>userId</label>
-          <input type='userId' name='userId' id='userId' value={this.state.userId} onChange={this.handleChange} />
-        </div>
-        <div>
-          <input type='button' value='add' onClick={this.add} />
+          <input type='button' value='Add' onClick={this.add} />
         </div>
       </div>
     )

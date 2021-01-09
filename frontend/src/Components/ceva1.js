@@ -1,21 +1,25 @@
-import './App.css';
+//import './App.css';
 import React from 'react'
 import store from './NoteStore'
 import NoteAddForm from './NoteAddForm'
 import NoteDetails from './NoteDetails'
 
 class App extends React.Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
+    //console.log('text constructor: '+ this.props.idLogat)
  
     this.state = {
       notita: [],
       notes: [],
-      adauga: 0
+      adauga: 0,
+      N: 0,
     }
+
+    //console.log('id app.js: '+ this.props.idLogat)
  
     this.add = (note) => {
-      store.addOne(note)
+      store.addOne(note,this.props.idLogat)
       this.state.adauga = 0
     }
 
@@ -34,16 +38,14 @@ class App extends React.Component {
     this.change = (i) => {
       this.setState({adauga : i})
     }
-    this.display = () =>{
-      this.setState({adauga : 2});
-    }
-    this.afiseaza=(note)=>{
-      NoteDetails.show(note)
+    this.display = (n) =>{
+      this.setState({adauga : 2, N: n});
+      console.log(n);
     }
   }
  
   componentDidMount () {
-    store.getAll()
+    store.getAll(this.props.idLogat)
  
     store.emitter.addListener('GET_PLANES_SUCCESS', () => {
       this.setState({
@@ -56,7 +58,7 @@ class App extends React.Component {
     if(this.state.adauga === 0){
      return (
       <div>
-      <h1>TITLU</h1>
+      <h1>Notite utilizator {this.props.idLogat}</h1>
        <input type="button" value="Adauga" onClick={()=>this.change(1)}></input>
        <br></br>
        <span> Titlu notita </span>
@@ -65,8 +67,8 @@ class App extends React.Component {
         {
           this.state.notes.map(e => 
           <div>
-            <button id={e.id} onClick={this.display}>Display</button>
-
+            <button id={e.id} onClick={()=>this.display(e.id)}>Display</button>
+            
             {e.title} {e.subject}
           </div>)
         }
@@ -81,7 +83,7 @@ class App extends React.Component {
       )
       else if(this.state.adauga === 2)return (
         <div>
-          <NoteDetails/>
+          <NoteDetails idNote={this.state.N}/>
 
           <button onClick={() => this.change(0)}>Cancel</button>
         </div>

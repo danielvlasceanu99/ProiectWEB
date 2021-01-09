@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { Component, Fragment } from "react";
-import NoteStore from "./NoteStore";
+import NotesForm from "./ceva1";
 
 class UserRegister extends Component {
 	state = {
@@ -81,7 +81,7 @@ class UserRegister extends Component {
 		fetch("http://localhost:9999/create-user", requestOptions).then((response) => response.json());
 	};
 
-	handleLogin = (event) => {
+	handleLogin = async(event) => {
 		event.preventDefault();
 
 		const user = {
@@ -89,32 +89,22 @@ class UserRegister extends Component {
 			email: this.state.email,
 		};
 
-		axios.post("http://localhost:9999/login", { password: this.state.password, email: this.state.email }).then((response) => {
-			this.setState({ loggedIn: response.data });
-			this.setState({ loggedIn: response.data["id"] });
-			console.log(this.state.loggedIn);
-		});
+		try {
+            const resp = await axios.post("http://localhost:9999/login", { password: this.state.password, email: this.state.email });
+            this.setState({ loggedIn: resp.data["id"] });
+        } catch (err) {
+            // Handle Error Here
+            console.error(err);
+        }
 	};
 
 	render() {
 		return (
 			<div>
-				{this.state.loggedIn ? ( //iei datele in componenta ta cu this.props //<Componenta this.state.loggedIn/>
-					// aici madaline -> componenta
-					// aici madaline -> componenta
-					// aici madaline -> componenta
-					// aici madaline -> componenta
-					// aici madaline -> componenta
-					// aici madaline -> componenta
-					// aici madaline -> componenta
-					// aici madaline -> componenta
-					// aici madaline -> componenta
-					// aici madaline -> componenta
-					// aici madaline -> componenta
-					// aici madaline -> componenta
-					// aici madaline -> componenta
-					// aici madaline -> componenta
-					<NoteStore />
+				{this.state.loggedIn ? (
+					<div>
+						<NotesForm idLogat={this.state.loggedIn}/>
+					</div>
 				) : (
 					<section className='login'>
 						<div className='loginContainer'>

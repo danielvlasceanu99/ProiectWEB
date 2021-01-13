@@ -1,137 +1,142 @@
-import React, { Fragment, Component } from 'react';
-import Message from './Message';
-import Progress from './Progress';
-import filestore from './FileStore';
+import React, { Fragment, Component } from "react";
+import Message from "./Message";
+import Progress from "./Progress";
+import filestore from "./FileStore";
 //import FileDB from './backend/models/file/FileDB'
-import axios from 'axios';
+import axios from "axios";
 //temport comentez route
 //import { route } from '../../../../backend/routes';
 
-
-
 class FileUpload extends Component {
-  constructor (props){
-    super(props)
-    this.state = {
-        SERVER :'http://localhost:9999',
-        fisier: {
-          name:'',
-          link:''
-        },
-        file:''
-    }
-  }
-  
-  // const SERVER ='http://localhost:9999'
-  // const [file, setFile] = useState('');
-  // const [filename, setFilename] = useState('Choose File');
-  // const [uploadedFile, setUploadedFile] = useState({});
-  // const [message, setMessage] = useState('');
-  // const [uploadPercentage, setUploadPercentage] = useState(0);
+	constructor(props) {
+		super(props);
+		this.state = {
+			SERVER: "http://localhost:9999",
+			fisier: {
+				name: "",
+				link: "",
+			},
+			file: "",
+		};
+	}
 
-   onChange = async (e) => {
-    // setFile(e.target.files[0]);
-    // setFilename(e.target.files[0].name);
-    const fisier= await fetch(e.target.files[0]);
-    this.setState({file:fisier})
-  };
+	// const SERVER ='http://localhost:9999'
+	// const [file, setFile] = useState('');
+	// const [filename, setFilename] = useState('Choose File');
+	// const [uploadedFile, setUploadedFile] = useState({});
+	// const [message, setMessage] = useState('');
+	// const [uploadPercentage, setUploadPercentage] = useState(0);
 
-   onSubmit = async e => {
-    e.preventDefault();
-    // const formData = new FormData();
-    // formData.append('file', file);
+	onChange = async (e) => {
+		// setFile(e.target.files[0]);
+		// setFilename(e.target.files[0].name);
+		const fisier = await fetch(e.target.files[0]);
+		this.setState({ file: fisier });
+	};
 
-    try {
-      // const res = await axios.post(`/${this.props.idNote}/create-file`, formData, {
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data'
-      //   },
-      //   // onUploadProgress: progressEvent => {
-      //   //   setUploadPercentage(
-      //   //     parseInt(
-      //   //       Math.round((progressEvent.loaded * 100) / progressEvent.total)
-      //   //     )
-      //   //   );
+	onSubmit = async (e) => {
+		e.preventDefault();
+		// const formData = new FormData();
+		// formData.append('file', file);
+		const imageData = new FormData();
+		imageData.append("image", this.state.file);
 
-      //   //   // Clear percentage
-      //   //   setTimeout(() => setUploadPercentage(0), 3000);
-      //   //}
-      // });
+		const config = {
+			method: "POST",
+			body: imageData,
+		};
 
-      // const { fileName, filePath } = res.data;
+		try {
+			const req = await fetch(`${this.state.SERVER}/uploadFile`, config);
+			if (req.ok) {
+				const res = await req.json();
+				console.log(res);
+			}
+		} catch (err) {
+			console.log(err);
+		}
 
-      // setUploadedFile({ fileName, filePath });
+		//try {
+		// const res = await axios.post(`/${this.props.idNote}/create-file`, formData, {
+		//   headers: {
+		//     'Content-Type': 'multipart/form-data'
+		//   },
+		//   // onUploadProgress: progressEvent => {
+		//   //   setUploadPercentage(
+		//   //     parseInt(
+		//   //       Math.round((progressEvent.loaded * 100) / progressEvent.total)
+		//   //     )
+		//   //   );
 
-      // this.props.onAdd({
-      //   name:fileName,
-      //   link:filePath
-      // })
+		//   //   // Clear percentage
+		//   //   setTimeout(() => setUploadPercentage(0), 3000);
+		//   //}
+		// });
 
-      // setMessage('File Uploaded');
-      console.log(this.state.file);
-      console.log(this.props.idNote);
-      try{
-        await axios.post(`${this.state.SERVER}/${this.props.idNote}/create-file`,this.state.file ,
-        {headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          })  
-        //this.getAll(idNote)
-    }catch(err){
-        console.warn(err)
-        this.emitter.emit('ADD_FIle_CREATE_ERROR')
-    }
+		// const { fileName, filePath } = res.data;
 
-      
-    } catch (err) {
-      // if (err.response.status === 500) {
-      //   setMessage('There was a problem with the server');
-      // } else {
-      //   setMessage(err.response.data.msg);
-      // }
-    }
+		// setUploadedFile({ fileName, filePath });
 
-    // function GetFileData(){
-    //   return setUploadedFile;
-    // }
+		// this.props.onAdd({
+		//   name:fileName,
+		//   link:filePath
+		// })
+		// const handleFileUpload = async (e) => {
 
-  };
+		// };
+		// setMessage('File Uploaded');
+		// console.log(this.state.file);
+		// console.log(this.props.idNote);
+		// try {
+		// 	await axios.post(`${this.state.SERVER}/uploadFile`, this.state.file, {
+		// 		headers: {
+		// 			"Content-Type": "multipart/form-data",
+		// 		},
+		// 	});
+		// 	//this.getAll(idNote)
+		// } catch (err) {
+		// 	console.warn(err);
+		// 	this.emitter.emit("ADD_FIle_CREATE_ERROR");
+		// }
+		//} catch (err) {
+		// if (err.response.status === 500) {
+		//   setMessage('There was a problem with the server');
+		// } else {
+		//   setMessage(err.response.data.msg);
+		// }
+		//	}
 
-  render (){
-  return (
-    <Fragment>
-      {/* {message ? <Message msg={message} /> : null} */}
-      <form onSubmit={this.onSubmit}>
-        <div className='custom-file mb-4'>
-          <input
-            type='file'
-            className='custom-file-input'
-            id='customFile'
-            onChange={this.onChange}
-          />
-          <label className='custom-file-label' htmlFor='customFile'>
-            Jeg
-          </label>
-        </div>
+		// function GetFileData(){
+		//   return setUploadedFile;
+		// }
+	};
 
-        {/* <Progress percentage={uploadPercentage} /> */}
+	render() {
+		return (
+			<Fragment>
+				{/* {message ? <Message msg={message} /> : null} */}
+				<form onSubmit={this.onSubmit}>
+					<div className='custom-file mb-4'>
+						<input type='file' className='custom-file-input' id='customFile' onChange={this.onChange} />
+						<label className='custom-file-label' htmlFor='customFile'>
+							Jeg
+						</label>
+					</div>
 
-        <input
-          type='submit'
-          value='Upload'
-          className='btn btn-primary btn-block mt-4'
-        />
-      </form>
-      
-        <div className='row mt-5'>
-          <div className='col-md-6 m-auto'>
-            <h3 className='text-center'>Scris</h3>
-            {/* <img style={{ width: '100%' }} src={uploadedFile.filePath} alt='' /> */}
-          </div>
-        </div>
-    </Fragment>
-  );
-  }
-};
+					{/* <Progress percentage={uploadPercentage} /> */}
+
+					<input type='submit' value='Upload' className='btn btn-primary btn-block mt-4' />
+				</form>
+
+				<div className='row mt-5'>
+					<div className='col-md-6 m-auto'>
+						<h3 className='text-center'>Scris</h3>
+						{/* <img style={{ width: '100%' }} src={uploadedFile.filePath} alt='' /> */}
+					</div>
+				</div>
+			</Fragment>
+		);
+	}
+}
 
 export default FileUpload;

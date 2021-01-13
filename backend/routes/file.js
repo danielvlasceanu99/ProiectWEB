@@ -37,38 +37,35 @@ router.get('/files/:file_id', async(req, res)=>{
     }
 })
 
-router.post('/:note_id/create-file', async(req, res) =>{
-    const note = await NoteDB.findByPk(req.params.note_id)
-    if(note){
-        const file = {
-            name: req.body.name,
-            link:req.body.link,
-            noteId:note.id
+router.post("/:note_id/create-file", async (req, res) => {
+    const note = await NoteDB.findByPk(req.params.note_id);
+    if (note) {
+        console.log(req.files);
+        if (req.files === null) {
+            return res.status(400).json({ msg: "No file uploaded " });
         }
-        const errors = []
-        
-        if(!file.name){
-            errors.push('No name')
-        }
-        if(!file.link){
-            errors.push('No link')
-        }
-    
-        if(errors.length === 0){
-            try{
-                await FileDB.create(file)
-                res.status(201).send({message:'File created'})
+        const file = req.files.file;
+        file.mv(`${__dirname}/uploads/${file.name}`, (err) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).send(err);
             }
-            catch{
-                res.status(500).send({message:'Error ocured while creating file'})
-            }
-        } else {
-            res.status(400).send(errors)
+        });
+        const fileX = {
+            name: file.name,
+            link: `${__dirname}/uploads/${file.name}`,
+            noteId: note.id
+        };
+        try {
+            await FileDB.create(fileX);
+            res.json({ fileName: file.name, filePath: `/uploads/${file.name}`});
+        } catch {
+            res.status(500).send({ message: "Error ocured while creating file" });
         }
     } else {
-        res.status(404).send({message:'Note not found'})
+        res.status(404).send({ message: "Note not found" });
     }
-})
+});
 
 router.delete('/delete-file/:file_id', async(req, res)=>{
     try{

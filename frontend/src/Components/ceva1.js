@@ -3,6 +3,9 @@ import React from 'react'
 import store from './NoteStore'
 import NoteAddForm from './NoteAddForm'
 import NoteDetails from './NoteDetails'
+import FileUpload from "./uploadFiles/FileUpload";
+import filestore from './uploadFiles/FileStore';
+import JegFisiere from './uploadFiles/jegFisiere'
 
 class App extends React.Component {
   constructor (props) {
@@ -12,6 +15,7 @@ class App extends React.Component {
     this.state = {
       notita: [],
       notes: [],
+      fisier:[],
       adauga: 0,
       N: 0,
     }
@@ -22,6 +26,11 @@ class App extends React.Component {
       store.addOne(note,this.props.idLogat)
       this.state.adauga = 0
     }
+
+    this.addFile = (fisier) => {
+      filestore.addOne(fisier,this.state.N);
+    }
+
 
     this.getOne= () =>{
       store.getOne()
@@ -84,8 +93,14 @@ class App extends React.Component {
       else if(this.state.adauga === 2)return (
         <div>
           <NoteDetails idNote={this.state.N}/>
-
+          <button onClick={() => this.change(3)}>Vezi fisiere</button>
           <button onClick={() => this.change(0)}>Cancel</button>
+        </div>
+      )
+      else if(this.state.adauga === 3)return (
+        <div>
+          <FileUpload idNote={this.state.N}/>
+          <button onClick={() => this.change(2)}>Cancel</button>
         </div>
       )
   }

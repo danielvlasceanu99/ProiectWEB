@@ -1,11 +1,8 @@
-//import './App.css';
 import React from 'react'
 import store from './NoteStore'
 import NoteAddForm from './NoteAddForm'
 import NoteDetails from './NoteDetails'
-import FileUpload from "./uploadFiles/FileUpload";
-import filestore from './uploadFiles/FileStore';
-import JegFisiere from './uploadFiles/jegFisiere'
+import FileUpload from "./FileUpload";
 
 class App extends React.Component {
   constructor (props) {
@@ -27,9 +24,6 @@ class App extends React.Component {
       this.state.adauga = 0
     }
 
-    this.addFile = (fisier) => {
-      filestore.addOne(fisier,this.state.N);
-    }
 
 
     this.getOne= () =>{
@@ -66,19 +60,16 @@ class App extends React.Component {
   render () {
     if(this.state.adauga === 0){
      return (
-      <div>
+      <div className="menu">
       <h1>Notite utilizator {this.props.idLogat}</h1>
-       <input type="button" value="Adauga" onClick={()=>this.change(1)}></input>
-       <br></br>
-       <span> Titlu notita </span>
-       <span>Materie</span>
-
+       <button value="Adauga" onClick={()=>this.change(1)}>Adauga</button>
         {
           this.state.notes.map(e => 
           <div>
+            <span> Titlu notita </span> {e.title}
+            <p>  <span>Materie </span> {e.subject} </p>
+          
             <button id={e.id} onClick={()=>this.display(e.id)}>Display</button>
-            
-            {e.title} {e.subject}
           </div>)
         }
         </div>)
@@ -91,14 +82,14 @@ class App extends React.Component {
         </div>
       )
       else if(this.state.adauga === 2)return (
-        <div>
+        <div className="menu">
           <NoteDetails idNote={this.state.N}/>
           <button onClick={() => this.change(3)}>Vezi fisiere</button>
           <button onClick={() => this.change(0)}>Cancel</button>
         </div>
       )
       else if(this.state.adauga === 3)return (
-        <div>
+        <div className="menu">
           <FileUpload idNote={this.state.N}/>
           <button onClick={() => this.change(2)}>Cancel</button>
         </div>

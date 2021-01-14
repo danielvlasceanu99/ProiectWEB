@@ -28,7 +28,7 @@ class NoteAddForm extends React.Component {
  
   render () {
     return (
-      <div>
+      <div className="menu">
         <div>
           <label htmlFor='title'>Title</label>
           <input type='text' name='title' id='title' value={this.state.title} onChange={this.handleChange} />
@@ -42,7 +42,7 @@ class NoteAddForm extends React.Component {
           <input type='text' name='text' id='text' value={this.state.text} onChange={this.handleChange} />
         </div>
         <div>
-          <input type='button' value='Add' onClick={this.add} />
+          <button  value='Add' onClick={this.add}> Add </button>
         </div>
       </div>
     )

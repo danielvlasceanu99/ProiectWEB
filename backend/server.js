@@ -11,6 +11,8 @@ const cors = require("cors");
 const app = express();
 const port = 9999;
 
+app.use(fileUpload())
+
 const corsOptions = {
 	origin: true,
 	allowedHeaders: ["Content-Type", "Authorization", "Access-Control-Allow-Methods", "Access-Control-Request-Headers"],

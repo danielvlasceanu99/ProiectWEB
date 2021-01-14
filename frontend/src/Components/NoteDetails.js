@@ -25,7 +25,7 @@ class NoteDetails extends React.Component {
 
   render () {
     return (
-      <div>
+      <div className="menu">
         <div>{'Titlu: ' + this.state.note.title}</div>
         <div>{'Materie: ' + this.state.note.subject}</div>
         <div>{'TEXT: ' + this.state.note.text}</div>

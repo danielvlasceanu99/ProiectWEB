@@ -2,15 +2,27 @@ const express = require("express");
 const router = express.Router();
 const FileDB = require("../models").Files;
 const NoteDB = require("../models").Notes;
-const fileUpload = require("express-fileupload");
-const multer = require("multer");
-const fs = require("fs");
-router.use(fileUpload());
+// const fileUpload = require("express-fileupload");
+// const multer = require("multer");
+// const path = require('path')
+// const fs = require("fs");
 
-const upload = multer({
-	dest: "../uploads",
-	// you might also want to set some limits: https://github.com/expressjs/multer#limits
-});
+
+// //setam storage engine.ul
+// const storageEngine = multer.diskStorage({
+// 	destination: './uploads/',
+// 	fileName: function(req,file,callback){
+// 		callback(null, file.fieldname + '-'+ Date.now() + 
+// 		path.extname(file.originalname));
+// 	}
+// });
+
+// //initializam fisierul uploadat
+// const upload = multer({
+// 	storage: storageEngine
+// }).single('myImage');
+
+
 router.get("/:note_id/files", async (req, res) => {
 	try {
 		const note = await NoteDB.findByPk(req.params.note_id, {
@@ -86,42 +98,20 @@ router.delete("/delete-file/:file_id", async (req, res) => {
 	}
 });
 
-// router.post("/upload", (req, res) => {
-// 	if (req.files === null) {
-// 		return res.status(400).json({ msg: "No file uploaded " });
-// 	}
-// 	const file = req.files.file;
-// 	file.mv(`${__dirname}/uploads/${file.name}`, (err) => {
-// 		if (err) {
-// 			console.error(err);
-// 			return res.status(500).send(err);
-// 		}
 
-// 		res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
-// 	});
-// });
+router.post("/uploadFile", (req, res) => {
 
-router.post("/uploadFile", upload.single("file" /* name attribute of <file> element in your form */), (req, res) => {
-	err = [];
-	if (err == 0) {
-		console.log("ia-o p'asta");
+	if(req.files === null){
+		console.log(req.files)
+		return res.status(400).json({msg: 'No file uploaded'})
+	}else{
+		const file = req.files.file;
+		file.mv(`${__dirname}/uploads/${file.name}`, err=>{
+			return res.status(200).send('yes, merge')
+		})
+		console.log(file)
 	}
-	const tempPath = `${__dirname}/${req.file.name}`;
-	const targetPath = path.join(__dirname, "./uploads/image.png");
 
-	if (path.extname(req.file.originalname).toLowerCase() === ".png") {
-		fs.rename(tempPath, targetPath, (err) => {
-			if (err) return handleError(err, res);
-
-			res.status(200).contentType("text/plain").end("File uploaded!");
-		});
-	} else {
-		fs.unlink(tempPath, (err) => {
-			if (err) return handleError(err, res);
-
-			res.status(403).contentType("text/plain").end("Only .png files are allowed!");
-		});
-	}
 });
 
 module.exports = router;

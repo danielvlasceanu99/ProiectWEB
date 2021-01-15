@@ -7,12 +7,11 @@ const NoteDB = require("../models").Notes;
 // const path = require('path')
 // const fs = require("fs");
 
-
 // //setam storage engine.ul
 // const storageEngine = multer.diskStorage({
 // 	destination: './uploads/',
 // 	fileName: function(req,file,callback){
-// 		callback(null, file.fieldname + '-'+ Date.now() + 
+// 		callback(null, file.fieldname + '-'+ Date.now() +
 // 		path.extname(file.originalname));
 // 	}
 // });
@@ -21,7 +20,6 @@ const NoteDB = require("../models").Notes;
 // const upload = multer({
 // 	storage: storageEngine
 // }).single('myImage');
-
 
 router.get("/:note_id/files", async (req, res) => {
 	try {
@@ -98,20 +96,33 @@ router.delete("/delete-file/:file_id", async (req, res) => {
 	}
 });
 
-
-router.post("/uploadFile", (req, res) => {
-
-	if(req.files === null){
-		console.log(req.files)
-		return res.status(400).json({msg: 'No file uploaded'})
-	}else{
-		const file = req.files.file;
-		file.mv(`${__dirname}/uploads/${file.name}`, err=>{
-			return res.status(200).send('yes, merge')
-		})
-		console.log(file)
+router.post("/:idNote/uploadFile", async (req, res) => {
+	if (req.files === null) {
+		console.log(req.files);
+		return res.status(400).json({ msg: "No file uploaded" });
+	} else {
+		const note = await NoteDB.findByPk(req.params.idNote);
+		if (note === null) {
+			return res.status(400).json({ msg: "No note aveiable" });
+		} else {
+			const file = req.files.file;
+			const fileX = {
+				name: file.name,
+				link: `${__dirname}/uploads/${file.name}`,
+				noteId: note.id,
+			};
+			try {
+				await FileDB.create(fileX);
+				//return res.status(200).send({ fileName: file.name, filePath: `/uploads/${file.name}` });
+			} catch {
+				return res.status(500).send({ message: "Error ocured while creating file" });
+			}
+			file.mv(`${__dirname}/uploads/${file.name}`, (err) => {
+				return res.status(200).send("yes, merge");
+			});
+			console.log(file);
+		}
 	}
-
 });
 
 module.exports = router;

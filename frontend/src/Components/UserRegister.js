@@ -78,10 +78,18 @@ class UserRegister extends Component {
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ name: this.state.name, password: this.state.password, email: this.state.email, confirmPassword: this.state.confirmPassword }),
 		};
-		fetch("http://localhost:9999/create-user", requestOptions).then((response) => response.json());
+		fetch("http://localhost:9999/create-user", requestOptions).then(async (response) => {
+			await response.json();
+			console.log(response);
+			if (response.status === 201) {
+				alert("Cont inregistrat");
+			} else {
+				alert("Something went bad");
+			}
+		});
 	};
 
-	handleLogin = async(event) => {
+	handleLogin = async (event) => {
 		event.preventDefault();
 
 		const user = {
@@ -90,12 +98,12 @@ class UserRegister extends Component {
 		};
 
 		try {
-            const resp = await axios.post("http://localhost:9999/login", { password: this.state.password, email: this.state.email });
-            this.setState({ loggedIn: resp.data["id"] });
-        } catch (err) {
-            // Handle Error Here
-            console.error(err);
-        }
+			const resp = await axios.post("http://localhost:9999/login", { password: this.state.password, email: this.state.email });
+			this.setState({ loggedIn: resp.data["id"] });
+		} catch (err) {
+			// Handle Error Here
+			console.error(err);
+		}
 	};
 
 	render() {
@@ -103,7 +111,7 @@ class UserRegister extends Component {
 			<div>
 				{this.state.loggedIn ? (
 					<div>
-						<NotesForm idLogat={this.state.loggedIn}/>
+						<NotesForm idLogat={this.state.loggedIn} />
 					</div>
 				) : (
 					<section className='login'>

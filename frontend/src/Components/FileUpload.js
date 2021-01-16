@@ -3,7 +3,7 @@ import axios from "axios";
 import FileStore from './FileStore'
 const SERVER = "http://localhost:9999";
 //const download=require("download");
-var retard=0;
+var NumeFileSelector="Choose File";
 
 
 
@@ -14,13 +14,17 @@ export class FileUpload extends Component {
 	 
 		this.state = {
 			file: null,
-			files:[]
+			files:[],
+			procent:0,
+			
 		}
 	
 
 	this.fileSelectedHandler = (event) => {
-		this.setState({ file: event.target.files[0] });
+		this.setState({ file: event.target.files[0]});
+		NumeFileSelector=event.target.files[0].name
 	};
+
 
 	this.fileUploadHandler = async (e) => {
 		const file = this.state.file;
@@ -32,10 +36,27 @@ export class FileUpload extends Component {
 		console.log(myFile.getAll("file"));
 
 		try {
-			const res = await axios.post(`${SERVER}/${this.props.idNote}/uploadFile`, myFile);
+			const res = await axios.post(`${SERVER}/${this.props.idNote}/uploadFile`, myFile,{
+			onUploadProgress: progressEvent => {
+				this.setState({
+					procent:parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total))
+				});
+	  
+				// Clear percentage
+				setTimeout(() => this.setState({procent:0}), 3000);
+			}
+			  });
 		} catch (error) {
 			console.log(error);
 		}
+
+		FileStore.getAll(this.props.idNote);
+		FileStore.emitter.addListener('GET_FILES_SUCCESS', () => {
+			this.setState({
+			  files: FileStore.data
+			})
+		  });
+		console.log(this.state.files);
 	};
 
 	 
@@ -95,8 +116,21 @@ export class FileUpload extends Component {
 		return (
 			<Fragment >
 				<div className='menu'>
-					<input type='file' id='customFile' onChange={this.fileSelectedHandler}></input>
+					<div class="custom-file">
+						<input type="file" class="custom-file-input" id="customFile" onChange={this.fileSelectedHandler}></input>
+						<label class="custom-file-label" for="customFile">{NumeFileSelector}</label>
+					</div>
 					<button onClick={this.fileUploadHandler}> Upload </button>
+					<div className='progress'>
+						<div
+							className='progress-bar progress-bar-striped bg-success'
+							role='progressbar'
+							style={{ width: `${this.state.procent}%` }}
+						>
+							{this.state.procent}%
+						</div>
+					</div>
+					<br/>
 					{
 					this.state.files.map((fila,index) => 
 					<div>

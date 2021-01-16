@@ -6,6 +6,8 @@ const NoteDB = require("../models").Notes;
 // const multer = require("multer");
 // const path = require('path')
 // const fs = require("fs");
+const http = require('http'); // or 'https' for https:// URLs
+const fs = require('fs');
 
 // //setam storage engine.ul
 // const storageEngine = multer.diskStorage({
@@ -124,5 +126,22 @@ router.post("/:idNote/uploadFile", async (req, res) => {
 		}
 	}
 });
+
+router.get('/downloadFile/:file_id', async (req, res) => {
+	
+		// const file = fs.createWriteStream(`/upload/${e.name}`);
+		// const request = http.get(e.link, function(response) {
+		// response.pipe(file)
+		// });
+		try{
+		const file = await FileDB.findByPk(req.params.file_id);
+			const downloadfile=file;
+			console.log(downloadfile.link);
+			res.download(downloadfile.link);
+		
+		}catch {
+			res.status(500).send({ message: "Error ocured while downloading file" });
+		}	
+  });
 
 module.exports = router;

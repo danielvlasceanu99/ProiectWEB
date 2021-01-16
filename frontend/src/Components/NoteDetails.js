@@ -26,10 +26,10 @@ class NoteDetails extends React.Component {
   render () {
     return (
       <div className="menu">
-        <div>{'Titlu: ' + this.state.note.title}</div>
-        <div>{'Materie: ' + this.state.note.subject}</div>
-        <div>{'TEXT: ' + this.state.note.text}</div>
-       
+        <h1>Detalii notita {this.props.idNote}</h1>
+        <div><strong>Denumire: </strong>{this.state.note.title}</div>
+        <div><strong>Materie: </strong>{this.state.note.subject}</div>
+        <div><strong>Text: </strong>{this.state.note.text}</div>
       </div>
     )
   }

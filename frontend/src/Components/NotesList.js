@@ -66,8 +66,8 @@ class App extends React.Component {
         {
           this.state.notes.map(e => 
           <div>
-            <span> Titlu notita </span> {e.title}
-            <p>  <span>Materie </span> {e.subject} </p>
+            <strong> Denumire notita: </strong> {e.title}
+            <p>  <strong>Materie: </strong> {e.subject} </p>
           
             <button id={e.id} onClick={()=>this.display(e.id)}>Display</button>
           </div>)
@@ -75,10 +75,10 @@ class App extends React.Component {
         </div>)
       }
       else if(this.state.adauga === 1)return (
-        <div>
-        <h1>TITLU</h1>
-        <NoteAddForm onAdd={this.add}/>
-        <button onClick={() => this.change(0)}>Cancel</button>
+        <div className="menu">
+          <h1>Adauga Notita</h1>
+          <NoteAddForm onAdd={this.add}/>
+          <button onClick={() => this.change(0)}>Cancel</button>
         </div>
       )
       else if(this.state.adauga === 2)return (

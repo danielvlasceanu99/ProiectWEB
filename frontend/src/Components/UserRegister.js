@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { Component, Fragment } from "react";
-import NotesForm from "./ceva1";
+import NotesForm from "./NotesList";
 
 class UserRegister extends Component {
 	state = {

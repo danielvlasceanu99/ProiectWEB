@@ -12,7 +12,6 @@ class App extends React.Component {
     this.state = {
       notita: [],
       notes: [],
-      fisier:[],
       adauga: 0,
       N: 0,
     }
